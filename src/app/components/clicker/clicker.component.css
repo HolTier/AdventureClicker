@@ -1,0 +1,14 @@
+.clickerImgContainer {
+  position: relative;
+  padding: 5px;
+  height: 400px;
+  width: 300px;
+}
+
+.clickerImage {
+  border: 2px solid #000;
+  border-radius: 25px;
+  flex-shrink: 0;
+  height: 100%;
+  width: 100%;
+}
