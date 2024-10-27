@@ -1,10 +1,18 @@
-<div class="clicker-img-container" (click)="onClickerClick($event)">
-  <img class="clicker-image" [ngSrc]="imgSrc" fill alt="" priority draggable="false"/>
-  <span
-    *ngFor="let click of clicks"
-    [ngStyle]="{ 'top.px': click.y, 'left.px': click.x }"
-    class="clicker-value"
-  >
-    {{click.value}}
-  </span>
+<div class="clicker-main-container">
+  <div class="clicker-img-container" (click)="onClickerClick($event)">
+    <img class="clicker-image" [ngSrc]="imgSrc" fill alt="" priority draggable="false"/>
+    <span
+      *ngFor="let click of clicks"
+      [ngStyle]="{ 'top.px': click.y, 'left.px': click.x }"
+      class="clicker-value"
+    >
+      {{click.value}}
+    </span>
+  </div>
+  <div class="health-bar-container">
+    <div [ngStyle]="{'width': healthValue + '%'}"  class="health-bar"></div>
+    <div class="health-bar-value">
+      <p>{{healthValue}}</p>
+    </div>
+  </div>
 </div>
