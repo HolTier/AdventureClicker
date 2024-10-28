@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import {NgForOf, NgOptimizedImage, NgStyle} from '@angular/common';
+import {AsyncPipe, NgForOf, NgOptimizedImage, NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ImageService} from '../../services/image.service';
+import {Observable} from 'rxjs';
+import {GameStateService} from '../../core/game-state.service';
 
 @Component({
   selector: 'app-clicker',
@@ -10,7 +12,8 @@ import {ImageService} from '../../services/image.service';
     NgOptimizedImage,
     NgForOf,
     NgStyle,
-    FormsModule
+    FormsModule,
+    AsyncPipe
   ],
   templateUrl: './clicker.component.html',
   styleUrl: './clicker.component.css'
@@ -22,7 +25,13 @@ export class ClickerComponent {
   enemyHealth: number = 100;
   healthValue: any = 100;
   images: ImageService = new ImageService();
-  coins: number = 0;
+  coins$: Observable<number>;
+  coinMultiplier$: Observable<number>;
+
+  constructor(private gameStateService: GameStateService) {
+    this.coins$ = this.gameStateService.coins$;
+    this.coinMultiplier$ = this.gameStateService.coinMultiplier$;
+  }
 
   onClickerClick(event: MouseEvent): void {
     const target = event.currentTarget as HTMLElement; // Get the clicked element
@@ -39,7 +48,7 @@ export class ClickerComponent {
     this.healthValue -= 1;
 
     // Increase coins
-    this.coins += 1;
+    this.gameStateService.addCoins(1);
 
     if (this.healthValue <= 0) {
       this.healthValue = 100;
