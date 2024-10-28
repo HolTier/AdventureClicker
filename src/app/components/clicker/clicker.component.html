@@ -1,4 +1,10 @@
 <div class="clicker-main-container">
+  <div class="clicker-coins-container">
+    <div class="coin-icon">
+      <img ngSrc="/Coin1.png" alt="coins" fill/>
+    </div>
+    <p>{{coins}}</p>
+  </div>
   <div class="clicker-img-container" (click)="onClickerClick($event)">
     <img class="clicker-image" [ngSrc]="imgSrc" fill alt="" priority draggable="false"/>
     <span
