@@ -1,8 +1,13 @@
 <div class="upgrade-main-container">
-  <app-upgrade-item
-    name="Hobbit"
-    icon="/characters/Hobbit.png"
-    cost="100"
-    (click)="onUpgradeClick($event)"
-  />
+  <span
+    *ngFor="let upgrade of this.upgrade$ | async"
+  >
+    <app-upgrade-item
+      name="{{upgrade.name}}"
+      icon="{{upgrade.icon}}"
+      cost="{{upgrade.cost}}"
+      (click)="onUpgradeClick(upgrade)"
+    >
+    </app-upgrade-item>
+  </span>
 </div>
