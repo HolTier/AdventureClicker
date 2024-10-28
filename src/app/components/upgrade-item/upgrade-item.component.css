@@ -1,0 +1,29 @@
+.upgrade-item-main-content {
+  display: flex;
+  max-height: 50px;
+  max-width: 100%;
+
+  border: 2px solid black;
+}
+
+.upgrade-item-left-container {
+  position: relative;
+  height: 50px;
+  width: 50px;
+  margin-right: 20px;
+}
+
+.upgrade-item-right-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+
+.upgrade-item-right-container p {
+  position: relative;
+  margin: 0;
+}
