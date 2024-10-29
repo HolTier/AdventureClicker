@@ -1,3 +1,7 @@
+.upgrade-main-container {
+  width: 100%;
+}
+
 .upgrade-items-span {
   display: flex;
   flex-direction: column;
@@ -8,7 +12,7 @@
   margin: 1px 0 1px 0;
   padding: 0;
   background: lightgray;
-  max-width: 300px;
+  max-width: 400px;
 }
 
 .upgrade-button:hover {
