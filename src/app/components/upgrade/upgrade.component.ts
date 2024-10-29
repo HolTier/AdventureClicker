@@ -26,6 +26,6 @@ export class UpgradeComponent {
 
   onUpgradeClick(upgrade: Upgrade): void {
     console.log('Upgrade clicked: ' + upgrade.name);
-    this.gameStateService.increaseCoinMultiplier(1);
+    this.gameStateService.levelUpUpgrade(upgrade);
   }
 }

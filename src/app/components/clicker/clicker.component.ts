@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AsyncPipe, NgForOf, NgOptimizedImage, NgStyle} from '@angular/common';
+import {AsyncPipe, DecimalPipe, NgForOf, NgOptimizedImage, NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ImageService} from '../../services/image.service';
 import {Observable} from 'rxjs';
@@ -13,7 +13,8 @@ import {GameStateService} from '../../core/game-state.service';
     NgForOf,
     NgStyle,
     FormsModule,
-    AsyncPipe
+    AsyncPipe,
+    DecimalPipe
   ],
   templateUrl: './clicker.component.html',
   styleUrl: './clicker.component.css'
@@ -60,4 +61,6 @@ export class ClickerComponent {
       this.clicks.shift();
     }, 1000)
   }
+
+  protected readonly Math = Math;
 }

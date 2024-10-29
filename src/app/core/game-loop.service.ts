@@ -5,23 +5,33 @@ import {GameStateService} from './game-state.service';
   providedIn: 'root'
 })
 export class GameLoopService {
-  private gameLoopInterval: any = 0;
+  private lastUpdatedTime: number = 0;
 
   constructor(private ngZone: NgZone, private gameStateService: GameStateService) {}
 
   startGameLoop(): void {
     this.ngZone.runOutsideAngular(() => {
-      this.gameLoopInterval = setInterval(() => this.updateGame(), 1000)
+      this.lastUpdatedTime = performance.now();
+      this.gameLoop();
     })
   }
 
-  private updateGame(): void {
-    this.gameStateService.addCoins(this.gameStateService["coinsPerSecond"]);
+  gameLoop(): void {
+    requestAnimationFrame((currentTime) => {
+      const deltaTime = (currentTime - this.lastUpdatedTime)/1000;
+      this.updateGame(deltaTime);
+      this.lastUpdatedTime = currentTime;
+
+      // Repeat the loop
+      this.gameLoop();
+    })
+  }
+
+  private updateGame(deltaTime: number): void {
+    this.gameStateService.addCoins(this.gameStateService["coinsPerSecond"] * (deltaTime));
   }
 
   ngOnDestroy(): void {
-    if (this.gameLoopInterval) {
-      clearInterval(this.gameLoopInterval);
-    }
+
   }
 }

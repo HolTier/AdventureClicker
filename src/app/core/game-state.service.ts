@@ -34,4 +34,14 @@ export class GameStateService {
   increaseCoinMultiplier(amount: number) {
     this.coinMultiplier.next((this.coinMultiplier.value + amount));
   }
+
+  levelUpUpgrade(upgrade: Upgrade): void {
+    //let itemIndex = this.upgrade.value.findIndex(x => x.id === upgrade.id);
+    upgrade.level += 1;
+    upgrade.cost *= 1.3;
+
+    this.upgrade.value[upgrade.id] = upgrade;
+
+    this.coinsPerSecond += upgrade.multiplier;
+  }
 }
