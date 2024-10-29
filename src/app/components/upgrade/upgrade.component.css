@@ -1,0 +1,24 @@
+.upgrade-items-span {
+  display: flex;
+  flex-direction: column;
+}
+
+.upgrade-button {
+  border: 2px solid black;
+  margin: 1px 0 1px 0;
+  padding: 0;
+  background: lightgray;
+  max-width: 300px;
+}
+
+.upgrade-button:hover {
+  background: darkgray;
+}
+
+.upgrade-button:active {
+  background: lightgray;
+}
+
+.upgrade-button:disabled {
+  background: darkgray;
+}

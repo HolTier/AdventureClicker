@@ -29,6 +29,7 @@ export class GameLoopService {
 
   private updateGame(deltaTime: number): void {
     this.gameStateService.addCoins(this.gameStateService["coinsPerSecond"] * (deltaTime));
+    this.gameStateService.checkIfUpgradeIsAvailable();
   }
 
   ngOnDestroy(): void {

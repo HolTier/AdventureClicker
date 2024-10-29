@@ -1,13 +1,15 @@
 <div class="upgrade-main-container">
   <span
     *ngFor="let upgrade of this.upgrade$ | async"
+    class="upgrade-items-span"
   >
-    <app-upgrade-item
-      name="{{upgrade.name}}"
-      icon="{{upgrade.icon}}"
-      cost="{{upgrade.cost}}"
-      (click)="onUpgradeClick(upgrade)"
-    >
-    </app-upgrade-item>
+    <button class="upgrade-button" (click)="onUpgradeClick(upgrade)" [disabled]="!upgrade.isAvailable">
+      <app-upgrade-item
+        name="{{upgrade.name}}"
+        icon="{{upgrade.icon}}"
+        cost="{{upgrade.cost}}"
+      >
+      </app-upgrade-item>
+    </button>
   </span>
 </div>

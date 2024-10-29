@@ -2,8 +2,6 @@
   display: flex;
   max-height: 50px;
   max-width: 100%;
-
-  border: 2px solid black;
 }
 
 .upgrade-item-left-container {

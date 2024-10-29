@@ -5,4 +5,5 @@ export interface Upgrade {
   cost: number;
   level: number;
   multiplier: number;
+  isAvailable: boolean;
 }
