@@ -1,15 +1,26 @@
 <div class="upgrade-main-container">
-  <span
-    *ngFor="let upgrade of this.upgrade$ | async"
-    class="upgrade-items-span"
-  >
-    <button class="upgrade-button" (click)="onUpgradeClick(upgrade)" [disabled]="!upgrade.isAvailable">
-      <app-upgrade-item
-        name="{{upgrade.name}}"
-        icon="{{upgrade.icon}}"
-        cost="{{upgrade.cost}}"
+  <div class="tabs-change-wrapper">
+    <button class="tab-button" (click)="tabNumber=0">Adventures</button>
+    <button class="tab-button" (click)="tabNumber=1">Shop</button>
+  </div>
+  <div class="tab-switch" [ngSwitch]="tabNumber">
+    <div class="tab" *ngSwitchCase="0">
+      <span
+        *ngFor="let upgrade of this.upgrade$ | async"
+        class="upgrade-items-span"
       >
-      </app-upgrade-item>
-    </button>
-  </span>
+        <button class="upgrade-button" (click)="onUpgradeClick(upgrade)" [disabled]="!upgrade.isAvailable">
+          <app-upgrade-item
+            name="{{upgrade.name}}"
+            icon="{{upgrade.icon}}"
+            cost="{{upgrade.cost}}"
+          >
+          </app-upgrade-item>
+        </button>
+      </span>
+    </div>
+    <div class="tab" *ngSwitchCase="1">
+      TEST
+    </div>
+  </div>
 </div>
