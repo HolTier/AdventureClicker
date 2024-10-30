@@ -20,7 +20,12 @@
       </span>
     </div>
     <div class="tab" *ngSwitchCase="1">
-      TEST
+      <span
+        *ngFor="let item of items$ | async"
+        class="items"
+      >
+        <app-item [item]="item"></app-item>
+      </span>
     </div>
   </div>
 </div>

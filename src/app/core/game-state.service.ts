@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Upgrade} from '../interfaces/upgrade.interface';
+import {Items, Upgrade} from '../interfaces/upgrade.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,8 @@ export class GameStateService {
   // Multipliers
   private coinMultiplier = new BehaviorSubject<number>(1);
   public coinMultiplier$ = this.coinMultiplier.asObservable();
+  private clickMultiplier = new BehaviorSubject<number>(1);
+  public clickMultiplier$ = this.clickMultiplier.asObservable();
 
   // Upgrades
   upgradesList: Upgrade[] = [
@@ -25,7 +27,19 @@ export class GameStateService {
   upgrade = new BehaviorSubject<Upgrade[]>(this.upgradesList);
   upgrade$ = this.upgrade.asObservable();
 
-  constructor() { }
+  // Items
+  itemsList: Items[] = [
+    {
+      id: 0, name: "Iron Sword", icon: "/items/ironSwordAI1.jpg", cost: 10, isPurchased: false,
+        effect: () => this.increaseClickValue(2)
+    }
+  ]
+  items = new BehaviorSubject<Items[]>(this.itemsList);
+  items$ = this.items.asObservable();
+
+  constructor() {
+
+  }
 
   addCoins(amount: number) {
     this.coins.next(this.coins.value + (amount * this.coinMultiplier.value));
@@ -56,5 +70,9 @@ export class GameStateService {
     this.upgrade.value[upgrade.id] = upgrade;
 
     this.coinsPerSecond += upgrade.multiplier;
+  }
+
+  increaseClickValue(amount: number) {
+    this.clickMultiplier.next((this.clickMultiplier.value * amount));
   }
 }
