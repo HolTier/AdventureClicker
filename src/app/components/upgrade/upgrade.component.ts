@@ -55,4 +55,10 @@ export class UpgradeComponent {
   hideTooltip() {
     this.isTooltipActive = false;
   }
+
+  onItemClick($event: MouseEvent, item: Items) {
+    item.effect();
+    item.isPurchased = true;
+    console.log('item clicked: ' + item);
+  }
 }

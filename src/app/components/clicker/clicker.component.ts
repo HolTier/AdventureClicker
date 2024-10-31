@@ -30,11 +30,11 @@ export class ClickerComponent {
   healthValue: any = 100;
   images: ImageService = new ImageService();
   coins$: Observable<number>;
-  coinMultiplier$: Observable<number>;
+  clickMultiplier$: Observable<number>;
 
   constructor(private gameStateService: GameStateService) {
     this.coins$ = this.gameStateService.coins$;
-    this.coinMultiplier$ = this.gameStateService.coinMultiplier$;
+    this.clickMultiplier$ = this.gameStateService.clickMultiplier$;
   }
 
   onClickerClick(event: MouseEvent): void {

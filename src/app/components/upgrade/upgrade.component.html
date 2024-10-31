@@ -21,18 +21,19 @@
     </div>
     <div class="tab" *ngSwitchCase="1">
       <div class="item-container">
-        <span
+        <ng-container
           *ngFor="let item of items$ | async"
           class="items"
         >
-          <div class="item-upgrade-wrapper">
+          <div class="item-upgrade-wrapper" *ngIf="!item.isPurchased">
             <app-item
               [item]="item"
               (mouseover)="onHoverItem($event, item)"
               (mouseleave)="hideTooltip()"
+              (click)="onItemClick($event, item)"
             ></app-item>
           </div>
-        </span>
+        </ng-container>
       </div>
     </div>
   </div>

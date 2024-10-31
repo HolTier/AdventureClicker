@@ -12,8 +12,6 @@ export class GameStateService {
   private coinsPerSecond = 0;
 
   // Multipliers
-  private coinMultiplier = new BehaviorSubject<number>(1);
-  public coinMultiplier$ = this.coinMultiplier.asObservable();
   private clickMultiplier = new BehaviorSubject<number>(1);
   public clickMultiplier$ = this.clickMultiplier.asObservable();
 
@@ -46,12 +44,9 @@ export class GameStateService {
   }
 
   addCoins(amount: number) {
-    this.coins.next(this.coins.value + (amount * this.coinMultiplier.value));
+    this.coins.next(this.coins.value + (amount * this.clickMultiplier.value));
   }
 
-  increaseCoinMultiplier(amount: number) {
-    this.coinMultiplier.next((this.coinMultiplier.value + amount));
-  }
 
   checkIfUpgradeIsAvailable() {
     for (let upgrade of this.upgrade.value) {
@@ -78,5 +73,6 @@ export class GameStateService {
 
   increaseClickValue(amount: number) {
     this.clickMultiplier.next((this.clickMultiplier.value * amount));
+    console.log("CLICKER")
   }
 }
