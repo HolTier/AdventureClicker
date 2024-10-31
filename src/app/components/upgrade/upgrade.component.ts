@@ -32,6 +32,7 @@ export class UpgradeComponent {
   tooltipName: string = '';
   tooltipDescription: string = '';
   tooltipPosition: {x: number, y: number} = {x: 0, y: 0};
+  tooltipCost: string | number = 0;
 
   constructor(private gameStateService: GameStateService) {
     this.upgrade$ = this.gameStateService.upgrade$;
@@ -47,6 +48,7 @@ export class UpgradeComponent {
     if(!this.isTooltipActive || item.name != this.tooltipName) {
       this.tooltipName = item.name;
       this.tooltipDescription = item.name;
+      this.tooltipCost = item.cost;
       this.tooltipPosition = {x: $event.clientX, y: $event.clientY};
       this.isTooltipActive = true;
     }

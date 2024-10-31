@@ -13,5 +13,6 @@ import {NgStyle} from '@angular/common';
 export class TooltipComponent {
   @Input() name!: string;
   @Input() description!: string;
+  @Input() cost!: string | number;
   @Input() position!: { x: number; y: number };
 }

@@ -2,10 +2,5 @@
   <img [ngSrc]="item.icon"
        fill
        alt="item icon"
-       (mouseover)="isMouesOver=true"
-       (mouseout)="isMouesOver=false"
   />
-  <span *ngIf="isMouesOver">
-    {{item.name}}
-  </span>
 </div>

@@ -28,11 +28,19 @@ export class GameStateService {
   // Items
   itemsList: Items[] = [
     {
-      id: 0, name: "Iron Sword", icon: "/items/ironSwordAI1.jpg", cost: 10, isPurchased: false,
+      id: 0, name: "Iron Sword", icon: "/items/ironSwordAI1.jpg", cost: 200, isPurchased: false,
         effect: () => this.increaseClickValue(2)
     },
     {
-      id: 1, name: "Gold Sword", icon: "/items/ironSwordAI1.jpg", cost: 10, isPurchased: false,
+      id: 1, name: "Gold Sword", icon: "/items/goldSwordAI1.jpg", cost: 1200, isPurchased: false,
+      effect: () => this.increaseClickValue(2)
+    },
+    {
+      id: 2, name: "Platinum Sword", icon: "/items/platinumSwordAI1.jpg", cost: 10000, isPurchased: false,
+      effect: () => this.increaseClickValue(2)
+    },
+    {
+      id: 3, name: "Magic Ore Sword", icon: "/items/magicOreSwordAI1.jpg", cost: 45000, isPurchased: false,
       effect: () => this.increaseClickValue(2)
     }
   ]

@@ -14,5 +14,4 @@ import {NgIf, NgOptimizedImage} from '@angular/common';
 })
 export class ItemComponent {
   @Input() item!: Items;
-  isMouesOver: boolean = false;
 }
