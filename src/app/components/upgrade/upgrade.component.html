@@ -20,12 +20,26 @@
       </span>
     </div>
     <div class="tab" *ngSwitchCase="1">
-      <span
-        *ngFor="let item of items$ | async"
-        class="items"
-      >
-        <app-item [item]="item"></app-item>
-      </span>
+      <div class="item-container">
+        <span
+          *ngFor="let item of items$ | async"
+          class="items"
+        >
+          <div class="item-upgrade-wrapper">
+            <app-item
+              [item]="item"
+              (mouseover)="onHoverItem($event, item)"
+              (mouseleave)="hideTooltip()"
+            ></app-item>
+          </div>
+        </span>
+      </div>
     </div>
   </div>
 </div>
+<app-tooltip
+  *ngIf="isTooltipActive"
+  [name]="tooltipName"
+  [description]="tooltipDescription"
+  [position]="tooltipPosition"
+></app-tooltip>

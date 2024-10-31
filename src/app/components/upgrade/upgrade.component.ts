@@ -5,6 +5,7 @@ import {AsyncPipe, NgClass, NgForOf, NgIf, NgSwitch, NgSwitchCase} from '@angula
 import {Items, Upgrade} from '../../interfaces/upgrade.interface';
 import {Observable} from 'rxjs';
 import {ItemComponent} from '../item/item.component';
+import {TooltipComponent} from '../tooltip/tooltip.component';
 
 @Component({
   selector: 'app-upgrade',
@@ -17,7 +18,8 @@ import {ItemComponent} from '../item/item.component';
     NgClass,
     NgSwitch,
     NgSwitchCase,
-    ItemComponent
+    ItemComponent,
+    TooltipComponent
   ],
   templateUrl: './upgrade.component.html',
   styleUrl: './upgrade.component.css'
@@ -26,6 +28,10 @@ export class UpgradeComponent {
   upgrade$: Observable<Upgrade[]> | undefined;
   items$: Observable<Items[]> | undefined;
   tabNumber: number = 0;
+  isTooltipActive: boolean = false;
+  tooltipName: string = '';
+  tooltipDescription: string = '';
+  tooltipPosition: {x: number, y: number} = {x: 0, y: 0};
 
   constructor(private gameStateService: GameStateService) {
     this.upgrade$ = this.gameStateService.upgrade$;
@@ -35,5 +41,18 @@ export class UpgradeComponent {
   onUpgradeClick(upgrade: Upgrade): void {
     console.log('Upgrade clicked: ' + upgrade.name);
     this.gameStateService.levelUpUpgrade(upgrade);
+  }
+
+  onHoverItem($event: MouseEvent, item: Items) {
+    if(!this.isTooltipActive || item.name != this.tooltipName) {
+      this.tooltipName = item.name;
+      this.tooltipDescription = item.name;
+      this.tooltipPosition = {x: $event.clientX, y: $event.clientY};
+      this.isTooltipActive = true;
+    }
+  }
+
+  hideTooltip() {
+    this.isTooltipActive = false;
   }
 }

@@ -32,6 +32,10 @@ export class GameStateService {
     {
       id: 0, name: "Iron Sword", icon: "/items/ironSwordAI1.jpg", cost: 10, isPurchased: false,
         effect: () => this.increaseClickValue(2)
+    },
+    {
+      id: 1, name: "Gold Sword", icon: "/items/ironSwordAI1.jpg", cost: 10, isPurchased: false,
+      effect: () => this.increaseClickValue(2)
     }
   ]
   items = new BehaviorSubject<Items[]>(this.itemsList);

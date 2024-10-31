@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import {AsyncPipe, DecimalPipe, NgForOf, NgOptimizedImage, NgStyle} from '@angular/common';
+import {AsyncPipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage, NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ImageService} from '../../services/image.service';
 import {Observable} from 'rxjs';
 import {GameStateService} from '../../core/game-state.service';
+import {TooltipComponent} from '../tooltip/tooltip.component';
 
 @Component({
   selector: 'app-clicker',
@@ -14,7 +15,9 @@ import {GameStateService} from '../../core/game-state.service';
     NgStyle,
     FormsModule,
     AsyncPipe,
-    DecimalPipe
+    DecimalPipe,
+    TooltipComponent,
+    NgIf
   ],
   templateUrl: './clicker.component.html',
   styleUrl: './clicker.component.css'
