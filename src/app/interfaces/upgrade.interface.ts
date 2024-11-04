@@ -15,4 +15,5 @@ export interface Items {
   cost: number;
   effect: () => void;
   isPurchased: boolean;
+  isUnlocked: () => boolean;
 }

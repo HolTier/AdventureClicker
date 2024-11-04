@@ -10,6 +10,8 @@ export class GameStateService {
   private coins = new BehaviorSubject<number>(0);
   public coins$ = this.coins.asObservable();
   private coinsPerSecond = 0;
+  private allCoins = new BehaviorSubject<number>(0);
+  public allCoins$ = this.allCoins.asObservable();
 
   // Multipliers
   private clickMultiplier = new BehaviorSubject<number>(1);
@@ -29,19 +31,19 @@ export class GameStateService {
   itemsList: Items[] = [
     {
       id: 0, name: "Iron Sword", icon: "/items/ironSwordAI1.jpg", cost: 200, isPurchased: false,
-        effect: () => this.increaseClickValue(2)
+        effect: () => this.increaseClickValue(2), isUnlocked: () => this.allCoins.value >= 50,
     },
     {
       id: 1, name: "Gold Sword", icon: "/items/goldSwordAI1.jpg", cost: 1200, isPurchased: false,
-      effect: () => this.increaseClickValue(2)
+      effect: () => this.increaseClickValue(2), isUnlocked: () => this.allCoins.value >= 150,
     },
     {
       id: 2, name: "Platinum Sword", icon: "/items/platinumSwordAI1.jpg", cost: 10000, isPurchased: false,
-      effect: () => this.increaseClickValue(2)
+      effect: () => this.increaseClickValue(2), isUnlocked: () => this.allCoins.value >= 250,
     },
     {
       id: 3, name: "Magic Ore Sword", icon: "/items/magicOreSwordAI1.jpg", cost: 45000, isPurchased: false,
-      effect: () => this.increaseClickValue(2)
+      effect: () => this.increaseClickValue(2), isUnlocked: () => this.allCoins.value >= 350,
     }
   ]
   items = new BehaviorSubject<Items[]>(this.itemsList);
