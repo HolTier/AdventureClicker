@@ -55,6 +55,7 @@ export class GameStateService {
 
   addCoins(amount: number) {
     this.coins.next(this.coins.value + (amount * this.clickMultiplier.value));
+    this.allCoins.next(this.coins.value + (amount * this.clickMultiplier.value));
   }
 
 

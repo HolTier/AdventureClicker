@@ -25,7 +25,7 @@
           *ngFor="let item of items$ | async"
           class="items"
         >
-          <div class="item-upgrade-wrapper" *ngIf="!item.isPurchased">
+          <div class="item-upgrade-wrapper" *ngIf="!item.isPurchased && item.isUnlocked()">
             <app-item
               [item]="item"
               (mouseover)="onHoverItem($event, item)"
