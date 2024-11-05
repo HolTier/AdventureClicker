@@ -13,6 +13,12 @@ export class GameStateService {
   private allCoins = new BehaviorSubject<number>(0);
   public allCoins$ = this.allCoins.asObservable();
 
+  // Enemy
+  private enemyMaxHealth = new BehaviorSubject<number>(100);
+  public enemyMaxHealth$ = this.enemyMaxHealth.asObservable();
+  private enemyCurrentHealth = new BehaviorSubject<number>(this.enemyMaxHealth.value);
+  public enemyCurrentHealth$ = this.enemyCurrentHealth.asObservable();
+
   // Multipliers
   private clickMultiplier = new BehaviorSubject<number>(1);
   public clickMultiplier$ = this.clickMultiplier.asObservable();
@@ -49,15 +55,13 @@ export class GameStateService {
   items = new BehaviorSubject<Items[]>(this.itemsList);
   items$ = this.items.asObservable();
 
-  constructor() {
-
-  }
+  constructor() {}
 
   addCoins(amount: number) {
     this.coins.next(this.coins.value + (amount * this.clickMultiplier.value));
-    this.allCoins.next(this.coins.value + (amount * this.clickMultiplier.value));
+    if(amount >= 0)
+      this.allCoins.next(this.coins.value + (amount * this.clickMultiplier.value));
   }
-
 
   checkIfUpgradeIsAvailable() {
     for (let upgrade of this.upgrade.value) {
@@ -85,5 +89,17 @@ export class GameStateService {
   increaseClickValue(amount: number) {
     this.clickMultiplier.next((this.clickMultiplier.value * amount));
     console.log("CLICKER")
+  }
+
+  onEnemyHit(amount: number) {
+    this.enemyCurrentHealth.next(this.enemyCurrentHealth.value - amount)
+    if(this.enemyCurrentHealth.value <= 0)
+      this.onEnemyDeath()
+  }
+
+  onEnemyDeath() {
+    this.addCoins(this.enemyMaxHealth.value)
+    this.enemyMaxHealth.next(this.enemyMaxHealth.value * 1.3);
+    this.enemyCurrentHealth.next(this.enemyMaxHealth.value)
   }
 }

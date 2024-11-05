@@ -16,9 +16,11 @@
     </span>
   </div>
   <div class="health-bar-container">
-    <div [ngStyle]="{'width': healthValue + '%'}"  class="health-bar"></div>
+    <div [ngStyle]="{'width': (((this.enemyCurrentHealth$ | async)??0)/((this.enemyMaxHealth$ | async)??1))*100 + '%'}"
+         class="health-bar"
+    ></div>
     <div class="health-bar-value">
-      <p>{{healthValue}}</p>
+      <p>{{enemyCurrentHealth$ | async}}</p>
     </div>
   </div>
 </div>
