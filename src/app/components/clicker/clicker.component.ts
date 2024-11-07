@@ -26,18 +26,18 @@ export class ClickerComponent {
   // Take img from local assets
   imgSrc: string = "/images/orcAI1.webp"
   clicks: { x: number; y: number; value: string }[] = [];
-  images: ImageService = new ImageService();
   coins$: Observable<number>;
   clickMultiplier$: Observable<number>;
   enemyMaxHealth$: Observable<number>;
   enemyCurrentHealth$: Observable<number>;
-  enemyHealthBarWidth: number=100;
+  enemyCurrentImage$: Observable<string>;
 
-  constructor(private gameStateService: GameStateService) {
+  constructor(private gameStateService: GameStateService, private imageService: ImageService) {
     this.coins$ = this.gameStateService.coins$;
     this.clickMultiplier$ = this.gameStateService.clickMultiplier$;
     this.enemyMaxHealth$ = this.gameStateService.enemyMaxHealth$;
-    this.enemyCurrentHealth$ = this.gameStateService.enemyCurrentHealth$
+    this.enemyCurrentHealth$ = this.gameStateService.enemyCurrentHealth$;
+    this.enemyCurrentImage$ = this.imageService.currentEnemyImage$;
   }
 
   onClickerClick(event: MouseEvent): void {

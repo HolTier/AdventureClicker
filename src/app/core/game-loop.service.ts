@@ -28,7 +28,8 @@ export class GameLoopService {
   }
 
   private updateGame(deltaTime: number): void {
-    this.gameStateService.addCoins(this.gameStateService["coinsPerSecond"] * (deltaTime));
+    this.gameStateService.addCoins(this.gameStateService["coinsPerSecond"] * deltaTime);
+    this.gameStateService.onEnemyHit(this.gameStateService["damagePerSecond"] * deltaTime)
     this.gameStateService.checkIfUpgradeIsAvailable();
   }
 

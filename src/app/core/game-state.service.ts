@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Items, Upgrade} from '../interfaces/upgrade.interface';
+import {ImageService} from '../services/image.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class GameStateService {
   public enemyMaxHealth$ = this.enemyMaxHealth.asObservable();
   private enemyCurrentHealth = new BehaviorSubject<number>(this.enemyMaxHealth.value);
   public enemyCurrentHealth$ = this.enemyCurrentHealth.asObservable();
+  private damagePerSecond = 0;
 
   // Multipliers
   private clickMultiplier = new BehaviorSubject<number>(1);
@@ -25,10 +27,14 @@ export class GameStateService {
 
   // Upgrades
   upgradesList: Upgrade[] = [
-    {id: 0, name: 'Rouge', icon: '/characters/hobbitAI1.jpg', cost: 20, level:0, multiplier: 1, isAvailable: true},
-    {id: 1, name: 'Knight', icon: '/characters/knightAI1.jpg', cost: 50, level:0, multiplier: 3, isAvailable: true},
-    {id: 2, name: 'Huntress', icon: '/characters/huntressAI1.jpg', cost: 120, level:0, multiplier: 7, isAvailable: true},
-    {id: 3, name: 'Mage', icon: '/characters/mageAI1.jpg', cost: 1000, level:0, multiplier: 12, isAvailable: true}
+    {id: 0, name: 'Rouge', icon: '/characters/hobbitAI1.jpg', cost: 20, level:0,
+      incomeMultiplier: 1, isAvailable: true, damageMultiplier: 0.2},
+    {id: 1, name: 'Knight', icon: '/characters/knightAI1.jpg', cost: 50, level:0,
+      incomeMultiplier: 3, isAvailable: true, damageMultiplier: 0.6},
+    {id: 2, name: 'Huntress', icon: '/characters/huntressAI1.jpg', cost: 120, level:0,
+      incomeMultiplier: 7, isAvailable: true, damageMultiplier: 1.2},
+    {id: 3, name: 'Mage', icon: '/characters/mageAI1.jpg', cost: 1000, level:0,
+      incomeMultiplier: 12, isAvailable: true, damageMultiplier: 1.7}
   ]
   upgrade = new BehaviorSubject<Upgrade[]>(this.upgradesList);
   upgrade$ = this.upgrade.asObservable();
@@ -55,7 +61,7 @@ export class GameStateService {
   items = new BehaviorSubject<Items[]>(this.itemsList);
   items$ = this.items.asObservable();
 
-  constructor() {}
+  constructor(private imageService: ImageService) {}
 
   addCoins(amount: number) {
     this.coins.next(this.coins.value + (amount * this.clickMultiplier.value));
@@ -83,7 +89,8 @@ export class GameStateService {
     upgrade.cost *= 1.3;
     this.upgrade.value[upgrade.id] = upgrade;
 
-    this.coinsPerSecond += upgrade.multiplier;
+    this.coinsPerSecond += upgrade.incomeMultiplier;
+    this.damagePerSecond += upgrade.damageMultiplier;
   }
 
   increaseClickValue(amount: number) {
@@ -98,8 +105,9 @@ export class GameStateService {
   }
 
   onEnemyDeath() {
-    this.addCoins(this.enemyMaxHealth.value)
+    this.addCoins(this.enemyMaxHealth.value);
     this.enemyMaxHealth.next(this.enemyMaxHealth.value * 1.3);
-    this.enemyCurrentHealth.next(this.enemyMaxHealth.value)
+    this.enemyCurrentHealth.next(this.enemyMaxHealth.value);
+    this.imageService.changeEnemyImage();
   }
 }

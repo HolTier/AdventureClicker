@@ -4,7 +4,8 @@ export interface Upgrade {
   icon: string;
   cost: number;
   level: number;
-  multiplier: number;
+  incomeMultiplier: number;
+  damageMultiplier: number;
   isAvailable: boolean;
 }
 

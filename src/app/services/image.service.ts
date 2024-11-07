@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,12 @@ export class ImageService {
     "images/trollAI1.jpg",
     "images/wolfAI1.jpg",
   ]
+  private currentEnemyImage = new BehaviorSubject<string>(this.images[1])
+  public currentEnemyImage$ = this.currentEnemyImage.asObservable();
+
   constructor() { }
+
+  changeEnemyImage() {
+    this.currentEnemyImage.next(this.images[Math.floor(Math.random() * this.images.length)]);
+  }
 }
