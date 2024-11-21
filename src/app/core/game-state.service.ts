@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Items, Upgrade} from '../interfaces/upgrade.interface';
+import {Items, SkillItem, Upgrade} from '../interfaces/upgrade.interface';
 import {ImageService} from '../services/image.service';
 
 @Injectable({
@@ -60,6 +60,13 @@ export class GameStateService {
   ]
   items = new BehaviorSubject<Items[]>(this.itemsList);
   items$ = this.items.asObservable();
+
+  //Skills
+  skillItemsList: SkillItem[] = [
+    { id:0, name: "Sword Attack", icon: "", effect: () => {}, isUnlocked: () => true }
+  ]
+  skillItems = new BehaviorSubject<SkillItem[]>(this.skillItemsList);
+  skillItems$ = this.skillItems.asObservable();
 
   constructor(private imageService: ImageService) {}
 

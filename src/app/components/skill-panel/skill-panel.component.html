@@ -1,1 +1,13 @@
-<p>skill-panel works!</p>
+<div class="skill-panel-border">
+  <div class="skill-panel-wrapper">
+    <ng-container
+      *ngFor="let item of skillItems$ | async"
+    >
+      <div class="skill-item-wrapper">
+        <app-skill-item
+          [skillItem]="item"
+        />
+      </div>
+    </ng-container>
+  </div>
+</div>

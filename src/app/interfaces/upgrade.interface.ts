@@ -18,3 +18,11 @@ export interface Items {
   isPurchased: boolean;
   isUnlocked: () => boolean;
 }
+
+export interface SkillItem {
+  id: number;
+  name: string;
+  icon: string;
+  isUnlocked: () => boolean;
+  effect: () => void;
+}
