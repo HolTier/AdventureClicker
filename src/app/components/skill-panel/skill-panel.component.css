@@ -1,0 +1,11 @@
+.skill-panel-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.skill-panel-border {
+  position: absolute;
+  border: 1px black solid;
+  margin-top: 10px;
+}

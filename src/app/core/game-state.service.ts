@@ -63,7 +63,10 @@ export class GameStateService {
 
   //Skills
   skillItemsList: SkillItem[] = [
-    { id:0, name: "Sword Attack", icon: "", effect: () => {}, isUnlocked: () => true }
+    { id:0, name: "Sword Attack", icon: "/skills/swordAttackAI1.jpg", effect: () => {}, isUnlocked: () => true },
+    { id:1, name: "Bow Attack", icon: "/skills/bowAttackAI1.jpg", effect: () => {}, isUnlocked: () => true },
+    { id:2, name: "Fire Attack", icon: "/skills/fireBallSpellAttackAI1.jpg", effect: () => {}, isUnlocked: () => true },
+    { id:3, name: "Barbarian Scream", icon: "/skills/barbarianAttackAI1.jpg", effect: () => {}, isUnlocked: () => true }
   ]
   skillItems = new BehaviorSubject<SkillItem[]>(this.skillItemsList);
   skillItems$ = this.skillItems.asObservable();

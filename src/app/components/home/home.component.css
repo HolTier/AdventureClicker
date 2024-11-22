@@ -16,6 +16,13 @@
   justify-content: center;
 }
 
+.left-area-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .upgrade-wrapper {
   display: flex;
   flex-direction: row-reverse;
