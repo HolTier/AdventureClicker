@@ -64,18 +64,20 @@ export class GameStateService {
   //Skills
   skillItemsList: SkillItem[] = [
     {
-      id:0, name: "Sword Attack", icon: "/skills/swordAttackAI1.jpg",
-      effect: () => {}, isUnlocked: false
+      id:0, name: "Sword Attack", icon: "/skills/swordAttackAI1.jpg", cooldown: 1.0, damage: 10,
+      effect: (x: any) => this.onEnemyHit(x.damage), isUnlocked: false
     },
     {
-      id:1, name: "Bow Attack", icon: "/skills/bowAttackAI1.jpg",
-      effect: () => {}, isUnlocked: false
+      id:1, name: "Bow Attack", icon: "/skills/bowAttackAI1.jpg", cooldown: 5.0, damage: 10,
+      effect: (x: any) => this.onEnemyHit(x.damage), isUnlocked: false
     },
-    { id:2, name: "Fire Attack", icon: "/skills/fireBallSpellAttackAI1.jpg",
-      effect: () => {}, isUnlocked: false
+    {
+      id:2, name: "Fire Attack", icon: "/skills/fireBallSpellAttackAI1.jpg", cooldown: 8.0, damage: 10,
+      effect: (x: any) => this.onEnemyHit(x.damage), isUnlocked: false
     },
-    { id:3, name: "Barbarian Scream", icon: "/skills/barbarianAttackAI1.jpg",
-      effect: () => {}, isUnlocked: false
+    {
+      id:3, name: "Barbarian Scream", icon: "/skills/barbarianAttackAI1.jpg", cooldown: 10.0, damage: 10,
+      effect: (x: any) => this.onEnemyHit(x.damage), isUnlocked: false
     }
   ]
   skillItems = new BehaviorSubject<SkillItem[]>(this.skillItemsList);

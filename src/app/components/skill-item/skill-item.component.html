@@ -5,4 +5,9 @@
        fill
        alt="skill item"
   >
+  <div
+    class="cooldown-overlay"
+    *ngIf="true"
+    [style.animation-duration]="skillItem.cooldown + 's'"
+  ></div>
 </div>

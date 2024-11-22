@@ -3,7 +3,7 @@ import {GameLoopService} from '../../core/game-loop.service';
 import {Observable} from 'rxjs';
 import {SkillItem} from '../../interfaces/upgrade.interface';
 import {GameStateService} from '../../core/game-state.service';
-import {AsyncPipe, NgForOf} from '@angular/common';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {SkillItemComponent} from '../skill-item/skill-item.component';
 
 @Component({
@@ -12,7 +12,8 @@ import {SkillItemComponent} from '../skill-item/skill-item.component';
   imports: [
     AsyncPipe,
     NgForOf,
-    SkillItemComponent
+    SkillItemComponent,
+    NgIf
   ],
   templateUrl: './skill-panel.component.html',
   styleUrl: './skill-panel.component.css'

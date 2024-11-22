@@ -23,6 +23,8 @@ export interface SkillItem {
   id: number;
   name: string;
   icon: string;
+  cooldown: number;
+  damage: number;
   isUnlocked: boolean;
-  effect: () => void;
+  effect: (x: any) => void;
 }
