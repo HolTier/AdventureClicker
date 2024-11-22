@@ -23,6 +23,6 @@ export interface SkillItem {
   id: number;
   name: string;
   icon: string;
-  isUnlocked: () => boolean;
+  isUnlocked: boolean;
   effect: () => void;
 }

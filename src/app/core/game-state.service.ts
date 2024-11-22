@@ -63,10 +63,20 @@ export class GameStateService {
 
   //Skills
   skillItemsList: SkillItem[] = [
-    { id:0, name: "Sword Attack", icon: "/skills/swordAttackAI1.jpg", effect: () => {}, isUnlocked: () => true },
-    { id:1, name: "Bow Attack", icon: "/skills/bowAttackAI1.jpg", effect: () => {}, isUnlocked: () => true },
-    { id:2, name: "Fire Attack", icon: "/skills/fireBallSpellAttackAI1.jpg", effect: () => {}, isUnlocked: () => true },
-    { id:3, name: "Barbarian Scream", icon: "/skills/barbarianAttackAI1.jpg", effect: () => {}, isUnlocked: () => true }
+    {
+      id:0, name: "Sword Attack", icon: "/skills/swordAttackAI1.jpg",
+      effect: () => {}, isUnlocked: false
+    },
+    {
+      id:1, name: "Bow Attack", icon: "/skills/bowAttackAI1.jpg",
+      effect: () => {}, isUnlocked: false
+    },
+    { id:2, name: "Fire Attack", icon: "/skills/fireBallSpellAttackAI1.jpg",
+      effect: () => {}, isUnlocked: false
+    },
+    { id:3, name: "Barbarian Scream", icon: "/skills/barbarianAttackAI1.jpg",
+      effect: () => {}, isUnlocked: false
+    }
   ]
   skillItems = new BehaviorSubject<SkillItem[]>(this.skillItemsList);
   skillItems$ = this.skillItems.asObservable();
@@ -89,6 +99,11 @@ export class GameStateService {
     // check if upgrade is available
     if (!upgrade.isAvailable) {
       return;
+    }
+
+    // Unlock corresponding skill
+    if (upgrade.level == 0) {
+      this.unlockSkill(upgrade.id)
     }
 
     // Decrease coins
@@ -119,5 +134,12 @@ export class GameStateService {
     this.enemyMaxHealth.next(this.enemyMaxHealth.value * 1.3);
     this.enemyCurrentHealth.next(this.enemyMaxHealth.value);
     this.imageService.changeEnemyImage();
+  }
+
+  unlockSkill(id: number): void {
+    const skill = this.skillItems.value.find((x)=> x.id === id);
+    if (skill) {
+      skill.isUnlocked = true;
+    }
   }
 }

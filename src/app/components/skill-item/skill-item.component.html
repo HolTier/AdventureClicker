@@ -1,4 +1,6 @@
-<div class="skill-item-wrapper">
+<div class="skill-item-wrapper"
+     [ngStyle]="{'filter': skillItem.isUnlocked ? 'grayscale(0)' : 'grayscale(1)'}"
+  >
   <img [ngSrc]="skillItem.icon"
        fill
        alt="skill item"
