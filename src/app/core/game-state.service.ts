@@ -64,20 +64,20 @@ export class GameStateService {
   //Skills
   skillItemsList: SkillItem[] = [
     {
-      id:0, name: "Sword Attack", icon: "/skills/swordAttackAI1.jpg", cooldown: 1.0, damage: 10,
-      effect: (x: any) => this.onEnemyHit(x.damage), isUnlocked: false
+      id:0, name: "Sword Attack", icon: "/skills/swordAttackAI1.jpg", cooldown: 1000, damage: 10, isOnCooldown: false,
+      effect: (x: any) => setInterval(() => this.skillCallback(x), x.cooldown, x), isUnlocked: false
     },
     {
-      id:1, name: "Bow Attack", icon: "/skills/bowAttackAI1.jpg", cooldown: 5.0, damage: 10,
-      effect: (x: any) => this.onEnemyHit(x.damage), isUnlocked: false
+      id:1, name: "Bow Attack", icon: "/skills/bowAttackAI1.jpg", cooldown: 5000, damage: 10, isOnCooldown: false,
+      effect: (x: any) => setInterval(this.skillCallback, x.cooldown, x), isUnlocked: false
     },
     {
-      id:2, name: "Fire Attack", icon: "/skills/fireBallSpellAttackAI1.jpg", cooldown: 8.0, damage: 10,
-      effect: (x: any) => this.onEnemyHit(x.damage), isUnlocked: false
+      id:2, name: "Fire Attack", icon: "/skills/fireBallSpellAttackAI1.jpg", cooldown: 8000, damage: 10, isOnCooldown: false,
+      effect: (x: any) => setInterval(this.skillCallback, x.cooldown, x), isUnlocked: false
     },
     {
-      id:3, name: "Barbarian Scream", icon: "/skills/barbarianAttackAI1.jpg", cooldown: 10.0, damage: 10,
-      effect: (x: any) => this.onEnemyHit(x.damage), isUnlocked: false
+      id:3, name: "Barbarian Scream", icon: "/skills/barbarianAttackAI1.jpg", cooldown: 10000, damage: 10, isOnCooldown: false,
+      effect: (x: any) => setInterval(this.skillCallback, x.cooldown, x), isUnlocked: false
     }
   ]
   skillItems = new BehaviorSubject<SkillItem[]>(this.skillItemsList);
@@ -141,7 +141,15 @@ export class GameStateService {
   unlockSkill(id: number): void {
     const skill = this.skillItems.value.find((x)=> x.id === id);
     if (skill) {
+      console.log("Enter: " + skill.name)
       skill.isUnlocked = true;
+      skill.isOnCooldown = true;
+      skill.effect(skill);
     }
+  }
+
+  skillCallback(skill: SkillItem): void {
+    console.log(skill);
+    this.onEnemyHit(skill.damage);
   }
 }

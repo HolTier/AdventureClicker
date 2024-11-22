@@ -24,6 +24,7 @@ export interface SkillItem {
   name: string;
   icon: string;
   cooldown: number;
+  isOnCooldown: boolean;
   damage: number;
   isUnlocked: boolean;
   effect: (x: any) => void;
