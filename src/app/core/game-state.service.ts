@@ -71,15 +71,15 @@ export class GameStateService {
     },
     {
       id:1, name: "Bow Attack", icon: "/skills/bowAttackAI1.jpg", cooldown: 5000, damage: 10, isOnCooldown: false,
-      effect: (x: any) => setInterval(this.skillCallback, x.cooldown, x), isUnlocked: false
+      effect: (x: any) => setInterval(() => this.skillCallback(x), x.cooldown, x), isUnlocked: false
     },
     {
       id:2, name: "Fire Attack", icon: "/skills/fireBallSpellAttackAI1.jpg", cooldown: 8000, damage: 10, isOnCooldown: false,
-      effect: (x: any) => setInterval(this.skillCallback, x.cooldown, x), isUnlocked: false
+      effect: (x: any) => setInterval(() => this.skillCallback(x), x.cooldown, x), isUnlocked: false
     },
     {
       id:3, name: "Barbarian Scream", icon: "/skills/barbarianAttackAI1.jpg", cooldown: 10000, damage: 10, isOnCooldown: false,
-      effect: (x: any) => setInterval(this.skillCallback, x.cooldown, x), isUnlocked: false
+      effect: (x: any) => setInterval(() => this.skillCallback(x), x.cooldown, x), isUnlocked: false
     }
   ]
   skillItems = new BehaviorSubject<SkillItem[]>(this.skillItemsList);
@@ -127,7 +127,7 @@ export class GameStateService {
     console.log("CLICKER")
   }
 
-  onEnemyHit(amount: number) {
+  onEnemyHit(amount: number): void {
     this.enemyCurrentHealth.next(this.enemyCurrentHealth.value - amount)
     if(this.enemyCurrentHealth.value <= 0)
       this.onEnemyDeath()
@@ -151,15 +151,18 @@ export class GameStateService {
   }
 
   skillCallback(skill: SkillItem): void {
-    console.log(skill);
+    console.log(skill)
     this.onEnemyHit(skill.damage);
   }
 
   saveToCookie(): void {
+    console.log("Save to cookie")
+
     const gameSave: GameSave = {
       allCoins: this.allCoins.value,
       clickMultiplier: this.clickMultiplier.value,
       coins: this.coins.value,
+      coinsPerSecond: this.coinsPerSecond,
       damagePerSeconds: this.damagePerSecond,
       date: new Date().toString(),
       enemyCurrentHealth: this.enemyCurrentHealth.value,
@@ -171,17 +174,25 @@ export class GameStateService {
     };
 
     this.clickerCookieService.setCookieSave(JSON.stringify(gameSave));
+
+    console.log(JSON.stringify(gameSave));
   }
 
   loadSaveFromCookie(): void {
+    console.log('Load Save from Cookie');
+
     const gameSave = this.clickerCookieService.getCookieSave();
 
+    //console.log(gameSave);
+
     if (gameSave != null) {
+      console.log("SAVE: " + JSON.stringify(JSON.parse(gameSave)));
       const gameSaveObject: GameSave = JSON.parse(gameSave);
 
       this.allCoins.next(gameSaveObject.allCoins);
       this.clickMultiplier.next(gameSaveObject.clickMultiplier);
       this.coins.next(gameSaveObject.coins);
+      this.coinsPerSecond = gameSaveObject.coinsPerSecond;
       this.damagePerSecond = gameSaveObject.damagePerSeconds;
       this.enemyCurrentHealth.next(gameSaveObject.enemyCurrentHealth);
       this.enemyMaxHealth.next(gameSaveObject.enemyMaxHealth);
@@ -204,6 +215,11 @@ export class GameStateService {
         if (item) {
           item.id = savedItem.id;
           item.isUnlocked = savedItem.isUnlocked;
+          if (savedItem.isUnlocked) {
+            item.effect(item)
+            item.isOnCooldown = true;
+          }
+
         }
       }
       this.skillItems.next(skillsListTmp);
@@ -215,6 +231,7 @@ export class GameStateService {
         if (item) {
           item.id = savedItem.id;
           item.level = savedItem.level;
+          item.cost = item.cost * Math.pow(1.3, savedItem.level);
         }
       }
       this.upgrade.next(upgradeListTmp);

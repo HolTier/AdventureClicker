@@ -12,15 +12,20 @@ export class ClickerCookieService {
   constructor(private cookieService: CookieService, private encryptionService: EncryptionService) { }
 
   setCookieSave(data: string): void {
+    console.log("ENCRTYPTED DATA: " + data);
     this.cookieService.set("GameSave",
-      this.encryptionService.encryptData(data, SECRET_KEY), {expires: 1, sameSite: 'Lax'})
+      data, {expires: 1, sameSite: 'Lax'})
   }
 
   getCookieSave(): null | string {
     const cookieSaveExist: boolean = this.cookieService.check("GameSave");
     if (cookieSaveExist) {
-      return this.encryptionService.decryptData(this.cookieService.get("GameSave"), SECRET_KEY);
+      return this.cookieService.get("GameSave");
     }
     else return null;
+  }
+
+  deleteCookieSave(): void {
+    this.cookieService.delete("GameSave");
   }
 }

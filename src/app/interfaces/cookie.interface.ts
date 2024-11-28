@@ -3,6 +3,7 @@ export interface GameSave {
   date: string,
   coins: number,
   allCoins: number,
+  coinsPerSecond: number,
   enemyCurrentHealth: number,
   enemyMaxHealth: number,
   damagePerSeconds: number,

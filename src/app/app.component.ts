@@ -19,6 +19,9 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.gameLoopService.startGameLoop();
+    //this.gameLoopService.startGameLoop();
+
+    //window.addEventListener('beforeunload', this.gameLoopService.stopGameLoop)
   }
+
 }

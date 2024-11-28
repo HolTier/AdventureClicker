@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from '@angular/core';
+import {Injectable, NgZone, Component, OnDestroy, OnInit} from '@angular/core';
 import {GameStateService} from './game-state.service';
 
 @Injectable({
@@ -7,10 +7,21 @@ import {GameStateService} from './game-state.service';
 export class GameLoopService {
   private lastUpdatedTime: number = 0;
 
-  constructor(private ngZone: NgZone, private gameStateService: GameStateService) {}
+  constructor(private ngZone: NgZone, private gameStateService: GameStateService) {
+    this.startGameLoop();
+
+    console.log("STARTED");
+
+    window.onbeforeunload = () => this.ngOnDestroy();
+  }
+
+
+  ngOnDestroy() {
+    this.stopGameLoop();
+  }
 
   startGameLoop(): void {
-
+    this.gameStateService.loadSaveFromCookie()
 
     this.ngZone.runOutsideAngular(() => {
       this.lastUpdatedTime = performance.now();
@@ -35,7 +46,7 @@ export class GameLoopService {
     this.gameStateService.checkIfUpgradeIsAvailable();
   }
 
-  ngOnDestroy(): void {
-
+  stopGameLoop(): void {
+    this.gameStateService.saveToCookie();
   }
 }
