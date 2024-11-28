@@ -10,6 +10,8 @@ export class GameLoopService {
   constructor(private ngZone: NgZone, private gameStateService: GameStateService) {}
 
   startGameLoop(): void {
+
+
     this.ngZone.runOutsideAngular(() => {
       this.lastUpdatedTime = performance.now();
       this.gameLoop();

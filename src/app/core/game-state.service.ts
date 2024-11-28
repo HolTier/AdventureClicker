@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Items, SkillItem, Upgrade} from '../interfaces/upgrade.interface';
 import {ImageService} from '../services/image.service';
+import {ClickerCookieService} from '../services/clicker-cookie.service';
+import {GameSave} from '../interfaces/cookie.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -83,7 +85,7 @@ export class GameStateService {
   skillItems = new BehaviorSubject<SkillItem[]>(this.skillItemsList);
   skillItems$ = this.skillItems.asObservable();
 
-  constructor(private imageService: ImageService) {}
+  constructor(private imageService: ImageService, private clickerCookieService: ClickerCookieService) {}
 
   addCoins(amount: number) {
     this.coins.next(this.coins.value + (amount * this.clickMultiplier.value));
@@ -151,5 +153,71 @@ export class GameStateService {
   skillCallback(skill: SkillItem): void {
     console.log(skill);
     this.onEnemyHit(skill.damage);
+  }
+
+  saveToCookie(): void {
+    const gameSave: GameSave = {
+      allCoins: this.allCoins.value,
+      clickMultiplier: this.clickMultiplier.value,
+      coins: this.coins.value,
+      damagePerSeconds: this.damagePerSecond,
+      date: new Date().toString(),
+      enemyCurrentHealth: this.enemyCurrentHealth.value,
+      enemyMaxHealth: this.enemyMaxHealth.value,
+      itemsList: this.items.value.map((x) => ({id: x.id, isUnlocked: x.isPurchased})),
+      name: 'Save' + new Date().toString(),
+      skillsList: this.skillItems.value.map((x) => ({id: x.id, isUnlocked: x.isUnlocked})),
+      upgradesList: this.upgrade.value.map((x) => ({id: x.id, level: x.level}))
+    };
+
+    this.clickerCookieService.setCookieSave(JSON.stringify(gameSave));
+  }
+
+  loadSaveFromCookie(): void {
+    const gameSave = this.clickerCookieService.getCookieSave();
+
+    if (gameSave != null) {
+      const gameSaveObject: GameSave = JSON.parse(gameSave);
+
+      this.allCoins.next(gameSaveObject.allCoins);
+      this.clickMultiplier.next(gameSaveObject.clickMultiplier);
+      this.coins.next(gameSaveObject.coins);
+      this.damagePerSecond = gameSaveObject.damagePerSeconds;
+      this.enemyCurrentHealth.next(gameSaveObject.enemyCurrentHealth);
+      this.enemyMaxHealth.next(gameSaveObject.enemyMaxHealth);
+
+      // ITEMS
+      let itemsListTmp = this.itemsList;
+      for (let savedItem of gameSaveObject.itemsList) {
+        const item = itemsListTmp.find(x => x.id === savedItem.id);
+        if (item) {
+          item.id = savedItem.id;
+          item.isPurchased = savedItem.isUnlocked;
+        }
+      }
+      this.items.next(itemsListTmp);
+
+      // SKILLS
+      let skillsListTmp = this.skillItemsList;
+      for (let savedItem of gameSaveObject.skillsList) {
+        const item = skillsListTmp.find(x => x.id === savedItem.id);
+        if (item) {
+          item.id = savedItem.id;
+          item.isUnlocked = savedItem.isUnlocked;
+        }
+      }
+      this.skillItems.next(skillsListTmp);
+
+      // UPGRADE
+      let upgradeListTmp = this.upgradesList;
+      for (let savedItem of gameSaveObject.upgradesList) {
+        const item = upgradeListTmp.find(x => x.id === savedItem.id);
+        if (item) {
+          item.id = savedItem.id;
+          item.level = savedItem.level;
+        }
+      }
+      this.upgrade.next(upgradeListTmp);
+    }
   }
 }
