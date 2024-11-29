@@ -59,6 +59,12 @@
   z-index: 0;
 }
 
+.health-bar-background {
+  width: 100%;
+  height: 100%;
+  background-color: lightgray;
+}
+
 .clicker-coins-container {
   display: flex;
   flex-direction: row;
